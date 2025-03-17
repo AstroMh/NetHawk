@@ -6,8 +6,8 @@ import os
 
 class Logo:
 	def toolkit_logo(self):
-		print(colored("********************************************", 'green') 
-		+ colored("Made By Enigma", 'cyan', attrs=['blink']) + colored("*********************************************\n", 'green'))
+		print(colored("*******************************************", 'green') 
+		+ colored("Made By AstroMh", 'cyan', attrs=['blink']) + colored("*********************************************\n", 'green'))
 		
 		print(colored(" .____                                   ,              _______                .   .        .   ", 'red', attrs=['bold']))
 		time.sleep(0.2)
@@ -35,7 +35,7 @@ class Logo:
 		print(colored("/ / /_       __\ \_\/ / /  \ \ \/ / /       \ \/___/ /  / / /      / / /____\/ // / /____\/ // / /           ", 'magenta'))
 		time.sleep(0.2)
 		print(colored("\_\___\     /____/_/\/_/    \_\/\/_/         \_____\/   \/_/       \/_________/ \/_________/ \/_/            ", 'magenta'))
-		print(colored("\t\t\t\t\t      Made By Enigma", 'magenta'))
+		print(colored("\t\t\t\t\t     Made By AstroMh", 'magenta'))
 		
 	def inject_logo(self):
 		os.system("clear")
@@ -45,7 +45,7 @@ class Logo:
 		print(colored("\t\t-=============%%%|   code  |  |______|_|___________|", 'green', attrs=['bold']))
 		time.sleep(0.1)
 		print(colored("\t\t|                | | | | | | ||| | | | |___________|", 'green', attrs=['bold']))
-		print(colored("\t\tMade By Enigma", 'green', attrs=['bold', 'reverse', 'blink']) + colored("   `------------=--------|           |", 'green', attrs=['bold']))
+		print(colored("\t\tMade By AstroMh", 'green', attrs=['bold', 'reverse', 'blink']) + colored("  `------------=--------|           |", 'green', attrs=['bold']))
 		time.sleep(0.1)
 		print(colored("\t\t______________                         |\n\n", 'green', attrs=['bold']))
 		
@@ -68,7 +68,7 @@ class Logo:
 		print('      _     _.="_.="\          /"=._"=._     _')
 		print('     ( \_.="_.="     `--------`     "=._"=._/ )')
 		print('      > _.="                            "=._ <')
-		print('     (_/          ' + colored(' Made By Enigma ', 'red', attrs=['blink']) + '         \_)\n\n')
+		print('     (_/          ' + colored(' Made By AstroMh ', 'red', attrs=['blink']) + '         \_)\n\n')
 		time.sleep(0.4)
 		print(colored("[!]", 'yellow') + colored(" TYPE ", 'cyan') + "help" + colored(" FOR THE COMMAND MENU!\n", 'cyan'))
 		print(colored("[!]", "yellow") + " CTRL + C to exit to main programm.\n")
@@ -84,7 +84,7 @@ class Logo:
 		print(colored("       ) )    //   / /   / /     //          //          //         //       ", 'blue', attrs=['bold']))
 		time.sleep(0.1)
 		print(colored("((___ / /    //   / /   / /     //          //          ((____     //        ", 'blue', attrs=['bold']))
-		print(colored("\n\t\t\t\tMade By Enigma", 'cyan', attrs=['blink']))
+		print(colored("\n\t\t\t\tMade By AstroMh", 'cyan', attrs=['blink']))
 		time.sleep(0.1)
 		
 	def net_scanner_logo(self):
@@ -94,7 +94,7 @@ class Logo:
 		print(colored(" |  \| | ___| |_  | (___   ___ __ _ _ __  _ __   ___ _ __ ", 'yellow'))
 		print(colored(" | . ` |/ _ \ __|  \___ \ / __/ _` | '_ \| '_ \ / _ \ '__|", 'yellow'))
 		print(colored(" | |\  |  __/ |_   ____) | (_| (_| | | | | | | |  __/ |   ", 'yellow'))
-		print(colored(" |_| \_|\___|\__| |_____/ \___\__,_|_| |_|_| |_|\___|_|   Made By Enigma\n", 'yellow'))
+		print(colored(" |_| \_|\___|\__| |_____/ \___\__,_|_| |_|_| |_|\___|_|   Made By AstroMh\n", 'yellow'))
 		print(colored("===================================================\n\tIP\t\t\t    MAC Address\n===================================================", 'yellow'))
 	
 	
