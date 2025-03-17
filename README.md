@@ -1,49 +1,126 @@
+Sure! Here's the updated README file with the **NetHawk** name incorporated:
 
+```markdown
+# NetHawk: Network Toolkit
 
-# Enigmas's Toolkit
+NetHawk is a Python-based network toolkit designed for various network operations such as packet sniffing, ARP spoofing, code injection, and more. The toolkit also includes a built-in backdoor with advanced capabilities like keylogging, file upload/download, and screenshot taking. Built using Python and leveraging libraries like `scapy`, `netfilterqueue`, and `termcolor`, NetHawk provides a user-friendly interface for network analysis and manipulation.
 
-*This is a genral toolkit for penetration testing*
+## Features
+
+- **Packet Sniffing**: Capture and analyze network packets, including HTTP requests and login credentials.
+- **ARP Spoofing**: Perform ARP spoofing attacks to intercept network traffic.
+- **Code Injection**: Inject JavaScript code into HTTP responses.
+- **Network Scanning**: Scan the network to discover active devices and their IP/MAC addresses.
+- **Backdoor Listener**: Set up a listener for reverse shell connections with advanced capabilities:
+  - **Keylogging**: Capture keystrokes on the target machine.
+  - **File Upload/Download**: Upload and download files to/from the target machine.
+  - **Screenshot Taking**: Capture screenshots from the target machine.
+  - **Encryption/Decryption**: Encrypt and decrypt files on the target machine.
+  - **Replication**: Copy the backdoor to other directories on the target machine.
+  - **Session Management**: Restart or terminate the backdoor session.
+
+## Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/NetHawk.git
+   cd NetHawk
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Run the toolkit**:
+   ```bash
+   python main.py
+   ```
 
 ## Usage
-This Programe is consited of different parts and options:
-	**1. Backdoor and Listener (for more informaation visit: )**
-	**2. Code Injector**
-	**3. Packet Sniffer**
-	**4. ARP Spoofer**
-	**5. Network Scanner**
 
----
-- BackDoor Listener
-This options allow the attacker to get full system control on the target's machine. it comes with
-a Listener as well which contains many other options. To learn more about the backdoor please
-visit: [BackDoor]()
+### Main Menu
+Upon running NetHawk, you will be presented with a main menu where you can select the desired operation:
 
-- Code Injector
-This programe allows the attacker to inject javascript code to the target's browser. Using the
-BeefXSS programe this option allows you to fully take control of the target's browser.
-Note: Before using this options the ARP Spoofer programe must be runned. 
+1. **Backdoor Listener**: Set up a listener for reverse shell connections.
+2. **Code Injector**: Inject JavaScript code into HTTP responses.
+3. **Packet Sniffer**: Capture and analyze network packets.
+4. **ARP Spoofer**: Perform ARP spoofing attacks.
+5. **Network Scanner**: Scan the network for active devices.
+6. **Exit**: Exit the toolkit.
 
-- Packet Sniffer
-This options allow you to see the packets flying through your computer (after ARP Spoofer).
-It also marks out login attempts so in case of a *http login* you can see the username and password.
+### Backdoor Listener Options
+When you select the **Backdoor Listener** option, you can use the following commands to interact with the target machine:
 
-- ARP Spoofer
-This is the base programe for many of the previous options. Spoofing the target's ip address and Access 
-Point's Ip address this programe puts you straight in the middle of the network connection making it useful
-during a MITM (Man In The Middle) attack
+- **Keylogger**:
+  - `keylogger start`: Start capturing keystrokes.
+  - `keylogger dump`: Dump the captured keystrokes.
+  - `keylogger stop`: Stop the keylogger.
 
-- Network Scanner
-This small programe shows every single devices in the network with their IPs and MACs. it can also
-write the output to a file.
+- **File Upload/Download**:
+  - `upload <file_path>`: Upload a file to the target machine.
+  - `download <file_path>`: Download a file from the target machine.
 
----
-## Instalation
+- **Screenshot**:
+  - `screenshot <file_path/name>`: Capture a screenshot from the target machine and save it locally.
 
-To install this project, follow these steps:
+- **Encryption/Decryption**:
+  - `encrypt <directory>`: Encrypt all files in a specified directory on the target machine.
+  - `decrypt <directory>`: Decrypt all files in a specified directory on the target machine.
 
-	```bash
-	git clone 
-	cd  
-	python install -r requirements.txt
+- **Replication**:
+  - `replicate <directory>`: Copy the backdoor to a specified directory on the target machine.
+
+- **Session Management**:
+  - `restart`: Restart the backdoor connection.
+  - `exit`: Close the backdoor connection.
+  - `terminate`: Terminate the backdoor session on both sides.
+
+### Example Commands
+
+- **Packet Sniffing**:
+  ```bash
+  python main.py
+  ```
+  Select option `3` and provide the network interface to sniff on.
+
+- **ARP Spoofing**:
+  ```bash
+  python main.py
+  ```
+  Select option `4` and provide the target IP and access point IP.
+
+- **Code Injection**:
+  ```bash
+  python main.py
+  ```
+  Select option `2` and provide your IP address to inject JavaScript code.
+
+- **Backdoor Listener**:
+  ```bash
+  python main.py
+  ```
+  Select option `1` and use the commands mentioned above to interact with the target machine.
+
+## Requirements
+
+- Python 3.x
+- scapy
+- netfilterqueue
+- termcolor
+- keyboard
+- pynput
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request with your changes.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Disclaimer
+
+NetHawk is intended for educational purposes only. The authors are not responsible for any misuse of this software. Use it at your own risk and only on networks you have permission to test.
 
 ---
