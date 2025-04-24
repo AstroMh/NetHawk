@@ -45,6 +45,12 @@ def import_netscan():
         return NetScanner
     return None
 
+def import_webscan():
+    if check_dependency("src.tools.webscan", ""):
+        from src.tools.webscan import WebScanner
+        return WebScanner
+    return None
+
 class Menu:
     """Class to initiate which sub-program is called by checking the input"""
     def __init__(self):
@@ -52,7 +58,7 @@ class Menu:
         logo = Logo()
         logo.toolkit_logo()
         # Sub programs
-        action_list = ["Backdoor listener", "Code Injector", "Packet Sniffer", "ARP Spoofer", "Network Scanner", "Exit"]
+        action_list = ["Backdoor listener", "Code Injector", "Packet Sniffer", "ARP Spoofer", "Network Scanner", "Web Scanner", "Exit"]
         for i in range(0, len(action_list)):
             print(colored("[{}]".format(i+1), 'yellow') + " {}".format(action_list[i]))
             time.sleep(0.2)
@@ -162,6 +168,40 @@ class Menu:
             NetScanner(ip_range)
             
         elif action[0] == "6":
+            WebScanner = import_webscan()
+            if not WebScanner:
+                input(colored("\nPress Enter to return to the main menu...", 'cyan'))
+                return
+                
+            target_url = input(colored("[?] ", 'magenta') + "Enter the target URL (e.g., https://example.com): ")
+            if not target_url.startswith("http"):
+                target_url = "http://" + target_url
+                
+            print(colored("[*] ", 'blue') + "Setting up web scanner options...")
+            max_threads = 10
+            timeout = 5
+            verbose = False
+            
+            try:
+                max_threads = int(input(colored("[?] ", 'yellow') + f"Enter max threads (default: {max_threads}): ") or max_threads)
+                timeout = int(input(colored("[?] ", 'yellow') + f"Enter timeout in seconds (default: {timeout}): ") or timeout)
+                verbose_input = input(colored("[?] ", 'yellow') + "Enable verbose output? (y/n): ").lower()
+                verbose = verbose_input == 'y'
+                
+                scanner = WebScanner(target_url, max_threads, timeout, verbose)
+                
+                report_format = input(colored("[?] ", 'cyan') + "Choose report format (json/html/csv) [default: html]: ").lower() or "html"
+                if report_format not in ["json", "html", "csv"]:
+                    print(colored("[!] ", 'yellow') + "Invalid format, using HTML as default")
+                    report_format = "html"
+                    
+                scanner.run(report_format)
+                input(colored("\nPress Enter to return to the main menu...", 'cyan'))
+            except Exception as e:
+                print(colored(f"[!] Error: {str(e)}", 'red'))
+                input(colored("\nPress Enter to return to the main menu...", 'cyan'))
+            
+        elif action[0] == "7":
             print(colored("\n[*] Exiting the Program.", 'red'))
             time.sleep(1)
             os.system('clear')

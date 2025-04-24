@@ -2,4 +2,10 @@ scapy==2.4.5
 termcolor==2.3.0
 keyboard==0.13.5
 pynput==1.7.6
-# Optional: netfilterqueue==0.8.1 (requires additional system dependencies) 
+# Optional: netfilterqueue==0.8.1 (requires additional system dependencies)
+
+# Dependencies for Web Scanner
+requests==2.28.2
+beautifulsoup4==4.12.2
+dnspython==2.3.0
+urllib3==1.26.15 
