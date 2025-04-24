@@ -1,123 +1,71 @@
-# NetHawk: Network Toolkit
+# NetHawk - Network Security Toolkit
 
-NetHawk is a Python-based network toolkit designed for various network operations such as packet sniffing, ARP spoofing, code injection, and more. The toolkit also includes a built-in backdoor with advanced capabilities like keylogging, file upload/download, and screenshot taking. Built using Python and leveraging libraries like `scapy`, `netfilterqueue`, and `termcolor`, NetHawk provides a user-friendly interface for network analysis and manipulation.
+NetHawk is a comprehensive network security toolkit for ethical hacking and penetration testing. This toolkit includes a variety of tools for network scanning, packet sniffing, ARP spoofing, and more.
 
 ## Features
 
-- **Packet Sniffing**: Capture and analyze network packets, including HTTP requests and login credentials.
-- **ARP Spoofing**: Perform ARP spoofing attacks to intercept network traffic.
-- **Code Injection**: Inject JavaScript code into HTTP responses.
-- **Network Scanning**: Scan the network to discover active devices and their IP/MAC addresses.
-- **Backdoor Listener**: Set up a listener for reverse shell connections with advanced capabilities:
-  - **Keylogging**: Capture keystrokes on the target machine.
-  - **File Upload/Download**: Upload and download files to/from the target machine.
-  - **Screenshot Taking**: Capture screenshots from the target machine.
-  - **Encryption/Decryption**: Encrypt and decrypt files on the target machine.
-  - **Replication**: Copy the backdoor to other directories on the target machine.
-  - **Session Management**: Restart or terminate the backdoor session.
+- **Backdoor Listener**: A reverse shell listener for connecting to remote systems
+- **Code Injector**: Inject JavaScript code into HTTP responses
+- **Packet Sniffer**: Capture and analyze network traffic
+- **ARP Spoofer**: Perform ARP spoofing attacks for network traffic interception
+- **Network Scanner**: Scan local networks to discover active hosts
 
 ## Installation
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourusername/NetHawk.git
-   cd NetHawk
-   ```
+1. Clone the repository:
+```
+git clone https://github.com/yourusername/NetHawk.git
+cd NetHawk
+```
 
-2. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+2. Create a virtual environment and activate it:
+```
+python -m venv venv
+source venv/bin/activate  # On Windows, use: venv\Scripts\activate
+```
 
-3. **Run the toolkit**:
-   ```bash
-   python main.py
-   ```
+3. Install the required dependencies:
+```
+pip install -r requirements.txt
+```
+
+4. For some features, you may need additional tools:
+   - For Code Injector: `apt-get install beef-xss` (on Debian/Ubuntu)
+   - For ARP Spoofing: Make sure IP forwarding is enabled (`sudo sysctl -w net.ipv4.ip_forward=1`)
 
 ## Usage
 
-### Main Menu
-Upon running NetHawk, you will be presented with a main menu where you can select the desired operation:
+Run the main application (with the virtual environment activated):
+```
+sudo python main.py
+```
 
-1. **Backdoor Listener**: Set up a listener for reverse shell connections.
-2. **Code Injector**: Inject JavaScript code into HTTP responses.
-3. **Packet Sniffer**: Capture and analyze network packets.
-4. **ARP Spoofer**: Perform ARP spoofing attacks.
-5. **Network Scanner**: Scan the network for active devices.
-6. **Exit**: Exit the toolkit.
+Note: Most of the tools require root/administrator privileges to function correctly.
 
-### Backdoor Listener Options
-When you select the **Backdoor Listener** option, you can use the following commands to interact with the target machine:
+### Tool Selection
 
-- **Keylogger**:
-  - `keylogger start`: Start capturing keystrokes.
-  - `keylogger dump`: Dump the captured keystrokes.
-  - `keylogger stop`: Stop the keylogger.
+Once the application is running, you'll be presented with a menu to select the desired tool:
+1. Backdoor Listener
+2. Code Injector
+3. Packet Sniffer
+4. ARP Spoofer
+5. Network Scanner
+6. Exit
 
-- **File Upload/Download**:
-  - `upload <file_path>`: Upload a file to the target machine.
-  - `download <file_path>`: Download a file from the target machine.
+### Notes for macOS Users
 
-- **Screenshot**:
-  - `screenshot <file_path/name>`: Capture a screenshot from the target machine and save it locally.
+When running on macOS, you may need to install additional dependencies for some features. The application will detect missing dependencies and inform you. Some features (like `netfilterqueue`) may have limited functionality on macOS.
 
-- **Encryption/Decryption**:
-  - `encrypt <directory>`: Encrypt all files in a specified directory on the target machine.
-  - `decrypt <directory>`: Decrypt all files in a specified directory on the target machine.
+## Ethical Considerations
 
-- **Replication**:
-  - `replicate <directory>`: Copy the backdoor to a specified directory on the target machine.
-
-- **Session Management**:
-  - `restart`: Restart the backdoor connection.
-  - `exit`: Close the backdoor connection.
-  - `terminate`: Terminate the backdoor session on both sides.
-
-### Example Commands
-
-- **Packet Sniffing**:
-  ```bash
-  python main.py
-  ```
-  Select option `3` and provide the network interface to sniff on.
-
-- **ARP Spoofing**:
-  ```bash
-  python main.py
-  ```
-  Select option `4` and provide the target IP and access point IP.
-
-- **Code Injection**:
-  ```bash
-  python main.py
-  ```
-  Select option `2` and provide your IP address to inject JavaScript code.
-
-- **Backdoor Listener**:
-  ```bash
-  python main.py
-  ```
-  Select option `1` and use the commands mentioned above to interact with the target machine.
-
-## Requirements
-
-- Python 3.x
-- scapy
-- netfilterqueue
-- termcolor
-- keyboard
-- pynput
+This toolkit is developed for educational purposes and should only be used in controlled environments or on systems you own or have explicit permission to test. Unauthorized use of these tools against systems without permission is illegal and unethical.
 
 ## Contributing
 
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Disclaimer
-
-NetHawk is intended for educational purposes only. The authors are not responsible for any misuse of this software. Use it at your own risk and only on networks you have permission to test.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---

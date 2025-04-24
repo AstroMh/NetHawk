@@ -1,0 +1,1 @@
+"""Logo display functionality for the NetHawk toolkit.""" 
