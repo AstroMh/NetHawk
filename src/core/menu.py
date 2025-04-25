@@ -21,6 +21,12 @@ def import_listener():
         return Listener
     return None
 
+def import_Torchain():
+    if check_dependency("src.tools.TorChain", ""):
+        from src.tools.TorChain import TorProxyChain
+        return TorProxyChain
+    return None
+
 def import_packetsniff():
     if check_dependency("src.tools.packetsniff", ""):
         from src.tools.packetsniff import Sniffer
@@ -58,7 +64,8 @@ class Menu:
         logo = Logo()
         logo.toolkit_logo()
         # Sub programs
-        action_list = ["Backdoor listener", "Code Injector", "Packet Sniffer", "ARP Spoofer", "Network Scanner", "Web Scanner", "Exit"]
+        action_list = ["Backdoor listener", "Code Injector", "Packet Sniffer", "ARP Spoofer",
+                       "Network Scanner", "Web Scanner", "TorChain", "Exit"]
         for i in range(0, len(action_list)):
             print(colored("[{}]".format(i+1), 'yellow') + " {}".format(action_list[i]))
             time.sleep(0.2)
@@ -200,8 +207,15 @@ class Menu:
             except Exception as e:
                 print(colored(f"[!] Error: {str(e)}", 'red'))
                 input(colored("\nPress Enter to return to the main menu...", 'cyan'))
-            
+
         elif action[0] == "7":
+            print(colored("\n[!] Running Tor Proxy Chain...", 'yellow'))
+            TorProxy = import_Torchain()
+            if not TorProxy:
+                input(colored("\nPress Enter to return to the main menu...", 'cyan'))
+                return
+            
+        elif action[0] == "8":
             print(colored("\n[*] Exiting the Program.", 'red'))
             time.sleep(1)
             os.system('clear')
