@@ -87,4 +87,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
+pip install -e /Users/evan/Documents/GitHub/NetHawk
 python3 -m venv venv && source venv/bin/activate

@@ -46,10 +46,55 @@ def import_netscan():
     return None
 
 def import_webscan():
-    if check_dependency("src.tools.webscan", ""):
-        from src.tools.webscan import WebScanner
-        return WebScanner
-    return None
+    """Import the WebScanner class from the webscan module"""
+    try:
+        # Verify the project structure
+        import subprocess
+        import os
+        
+        # Find the path to the verification script
+        try:
+            from src.tools.webscan import __file__ as webscan_init_file
+            check_script = os.path.join(os.path.dirname(webscan_init_file), "check_structure.py")
+            
+            # Run the verification script
+            if os.path.isfile(check_script):
+                result = subprocess.run(["python", check_script], 
+                                        stdout=subprocess.PIPE, 
+                                        stderr=subprocess.PIPE,
+                                        text=True)
+                if result.returncode != 0:
+                    print(colored("\n[!] ", 'red') + "Webscan module structure verification failed.")
+                    print(result.stdout)
+                    return None
+        except Exception as e:
+            print(colored("\n[!] ", 'yellow') + f"Could not run structure verification: {str(e)}")
+        
+        # Try to import the WebScanner class
+        try:
+            from src.tools.webscan import WebScanner, check_webscan_requirements
+            
+            # If WebScanner is None, it means it couldn't be imported correctly
+            if WebScanner is None:
+                print(colored("\n[!] ", 'red') + "Could not import WebScanner module.")
+                print(colored("[!] ", 'yellow') + "Make sure all required files are present.")
+                return None
+            
+            # Check web scanner requirements
+            if not check_webscan_requirements():
+                print(colored("\n[!] ", 'yellow') + "Some requirements for running the web scanner are missing.")
+                print(colored("[!] ", 'yellow') + "Please install all required dependencies.")
+                return None
+            
+            return WebScanner
+        except ImportError as e:
+            print(colored("\n[!] ", 'red') + f"Error importing WebScanner: {str(e)}")
+            print(colored("[!] ", 'yellow') + "Make sure the project structure is correct.")
+            return None
+    except Exception as e:
+        print(colored("\n[!] ", 'red') + f"Unexpected error: {str(e)}")
+        print(colored("[!] ", 'yellow') + "This feature requires the webscan module to be correctly installed.")
+        return None
 
 class Menu:
     """Class to initiate which sub-program is called by checking the input"""
@@ -173,33 +218,69 @@ class Menu:
                 input(colored("\nPress Enter to return to the main menu...", 'cyan'))
                 return
                 
-            target_url = input(colored("[?] ", 'magenta') + "Enter the target URL (e.g., https://example.com): ")
-            if not target_url.startswith("http"):
-                target_url = "http://" + target_url
-                
-            print(colored("[*] ", 'blue') + "Setting up web scanner options...")
-            max_threads = 10
-            timeout = 5
-            verbose = False
-            
             try:
-                max_threads = int(input(colored("[?] ", 'yellow') + f"Enter max threads (default: {max_threads}): ") or max_threads)
-                timeout = int(input(colored("[?] ", 'yellow') + f"Enter timeout in seconds (default: {timeout}): ") or timeout)
-                verbose_input = input(colored("[?] ", 'yellow') + "Enable verbose output? (y/n): ").lower()
-                verbose = verbose_input == 'y'
-                
-                scanner = WebScanner(target_url, max_threads, timeout, verbose)
-                
-                report_format = input(colored("[?] ", 'cyan') + "Choose report format (json/html/csv) [default: html]: ").lower() or "html"
-                if report_format not in ["json", "html", "csv"]:
-                    print(colored("[!] ", 'yellow') + "Invalid format, using HTML as default")
-                    report_format = "html"
+                target_url = input(colored("[?] ", 'magenta') + "Enter the target URL (e.g., https://example.com): ")
+                if not target_url:
+                    print(colored("[!] ", 'red') + "Invalid URL. Returning to main menu.")
+                    input(colored("\nPress Enter to return to the main menu...", 'cyan'))
+                    return
                     
-                scanner.run(report_format)
-                input(colored("\nPress Enter to return to the main menu...", 'cyan'))
+                if not target_url.startswith("http"):
+                    target_url = "http://" + target_url
+                    
+                print(colored("[*] ", 'blue') + "Setting up web scanner options...")
+                max_threads = 10
+                timeout = 5
+                verbose = False
+                db_uri = None
+                
+                try:
+                    max_threads_input = input(colored("[?] ", 'yellow') + f"Enter max threads (default: {max_threads}): ")
+                    if max_threads_input.strip():
+                        max_threads = int(max_threads_input)
+                        
+                    timeout_input = input(colored("[?] ", 'yellow') + f"Enter timeout in seconds (default: {timeout}): ")
+                    if timeout_input.strip():
+                        timeout = int(timeout_input)
+                        
+                    verbose_input = input(colored("[?] ", 'yellow') + "Enable verbose output? (y/n): ").lower()
+                    verbose = verbose_input == 'y'
+                    
+                    db_input = input(colored("[?] ", 'yellow') + "Use database connection? (y/n): ").lower()
+                    if db_input == 'y':
+                        db_uri = input(colored("[?] ", 'yellow') + "Enter PostgreSQL connection URI (postgresql://username:password@host:port/dbname): ")
+                        if not db_uri or not db_uri.startswith('postgresql://'):
+                            print(colored("[!] ", 'yellow') + "Invalid PostgreSQL URI format. Using default connection settings.")
+                            db_uri = 'postgresql://postgres:postgres@localhost:5432/nethawk'
+                    
+                    print(colored("\n[*] ", 'blue') + "Initializing web scanner...")
+                    print(colored("[*] ", 'blue') + f"Target URL: {target_url}")
+                    print(colored("[*] ", 'blue') + f"Max Threads: {max_threads}")
+                    print(colored("[*] ", 'blue') + f"Timeout: {timeout} seconds")
+                    print(colored("[*] ", 'blue') + f"Verbose: {'Yes' if verbose else 'No'}")
+                    print(colored("[*] ", 'blue') + f"Database: {'Yes' if db_uri else 'No'}")
+                    
+                    try:
+                        scanner = WebScanner(target_url, max_threads, timeout, verbose, db_uri)
+                        
+                        report_format = input(colored("[?] ", 'cyan') + "Choose report format (json/html/csv) [default: html]: ").lower() or "html"
+                        if report_format not in ["json", "html", "csv"]:
+                            print(colored("[!] ", 'yellow') + "Invalid format, using HTML as default")
+                            report_format = "html"
+                            
+                        print(colored("\n[+] ", 'green') + "Starting web scan...")
+                        scanner.run(report_format)
+                        print(colored("\n[+] ", 'green') + "Web scan completed successfully!")
+                    except Exception as e:
+                        print(colored(f"\n[!] Error during scan: {str(e)}", 'red'))
+                        print(colored("[!] ", 'yellow') + "The scan could not be completed.")
+                        
+                except ValueError as e:
+                    print(colored(f"\n[!] Invalid input: {str(e)}", 'red'))
             except Exception as e:
-                print(colored(f"[!] Error: {str(e)}", 'red'))
-                input(colored("\nPress Enter to return to the main menu...", 'cyan'))
+                print(colored(f"\n[!] Unexpected error: {str(e)}", 'red'))
+            
+            input(colored("\nPress Enter to return to the main menu...", 'cyan'))
             
         elif action[0] == "7":
             print(colored("\n[*] Exiting the Program.", 'red'))
